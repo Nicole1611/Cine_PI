@@ -4,31 +4,47 @@
  */
 package com.mycompany.cine.reservaAsientos;
 
+import com.mycompany.cine.cliente.Cliente;
+import com.mycompany.cine.sala.Sala;
+
 import java.time.LocalDate;
 
-/**
- *
- * @author Usuario
- */
+
 public class Reserva {
     private LocalDate fecha; 
     private int numeroAsientos; 
-    private String cedula; 
-    private int salaID; 
-    
-    public Reserva(LocalDate fecha, int numeroAsientos, String cedula, int salaID) {
-        this.fecha = fecha;
-        this.numeroAsientos = numeroAsientos;
+    private Cliente cedula;
+    private Sala idSala;
+
+    public Reserva(Cliente cedula, int numeroAsientos, Sala idSala, LocalDate fecha) {
         this.cedula = cedula;
-        this.salaID = salaID;
+        this.numeroAsientos = numeroAsientos;
+        this.idSala = idSala;
+        this.fecha = fecha;
     }
-    
+
+    public Cliente getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(Cliente cedula) {
+        this.cedula = cedula;
+    }
+
     public LocalDate getFecha() {
         return fecha;
     }
 
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
+    }
+
+    public Sala getIdSala() {
+        return idSala;
+    }
+
+    public void setIdSala(Sala idSala) {
+        this.idSala = idSala;
     }
 
     public int getNumeroAsientos() {
@@ -39,28 +55,13 @@ public class Reserva {
         this.numeroAsientos = numeroAsientos;
     }
 
-    public String getCedula() {
-        return cedula;
-    }
-
-    public void setCedula(String cedula) {
-        this.cedula = cedula;
-    }
-
-    public int getSalaID() {
-        return salaID;
-    }
-
-    public void setSalaID(int salaID) {
-        this.salaID = salaID;
-    }
-
     @Override
     public String toString() {
-        return "Reserva{" + "fecha=" + fecha + ", numeroAsientos=" + numeroAsientos + ", cedula=" + cedula + ", salaID=" + salaID + '}';
+        return "Reserva{" +
+                "cedula=" + cedula +
+                ", fecha=" + fecha +
+                ", numeroAsientos=" + numeroAsientos +
+                ", idSala=" + idSala +
+                '}';
     }
-    
-    
-    
-    
 }
