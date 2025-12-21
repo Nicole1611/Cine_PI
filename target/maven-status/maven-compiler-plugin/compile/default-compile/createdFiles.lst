@@ -1,0 +1,4 @@
+com\mycompany\cine\Cine.class
+com\mycompany\cine\reservaAsientos\ReservaAsientos.class
+com\mycompany\cine\reservaAsientos\IReservaAsientos.class
+com\mycompany\cine\reservaAsientos\Reserva.class
