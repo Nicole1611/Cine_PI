@@ -1,14 +1,30 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.mycompany.cine.cliente;
 
+/**
+ *
+ * @author User
+ */
 public class Cliente {
     private String cedula;
     private String nombre;
-    private int edad;
+    private int edad; 
 
     public Cliente(String cedula, String nombre, int edad) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.edad = edad;
+    }
+
+    public String getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
     }
 
     public String getNombre() {
@@ -27,20 +43,10 @@ public class Cliente {
         this.edad = edad;
     }
 
-    public String getCedula() {
-        return cedula;
-    }
-
-    public void setCedula(String cedula) {
-        this.cedula = cedula;
-    }
-
     @Override
     public String toString() {
-        return "Cliente{" +
-                "cedula='" + cedula + '\'' +
-                ", nombre='" + nombre + '\'' +
-                ", edad=" + edad +
-                '}';
+        return "Cliente{" + "cedula=" + cedula + ", nombre=" + nombre + ", edad=" + edad + '}';
     }
+    
+    
 }

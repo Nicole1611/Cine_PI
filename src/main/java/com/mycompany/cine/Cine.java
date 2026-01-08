@@ -4,6 +4,8 @@
 
 package com.mycompany.cine;
 
+import com.mycompany.cine.Vistas.VistaPrincipal;
+
 /**
  *
  * @author User
@@ -11,8 +13,8 @@ package com.mycompany.cine;
 public class Cine {
 
     public static void main(String[] args) {
-
-        System.out.println("Hello World!");
+        VistaPrincipal vistaprincipal = new VistaPrincipal();
+        vistaprincipal.setVisible(true);
     }
 
 
