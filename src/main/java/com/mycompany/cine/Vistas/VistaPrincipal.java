@@ -1,19 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package com.mycompany.cine.Vistas;
 
-/**
- *
- * @author User
- */
+import com.mycompany.cine.Vistas.VCliente;
+import com.mycompany.cine.Vistas.VPelicula;
+import com.mycompany.cine.Vistas.VSalas;
+
+
+
 public class VistaPrincipal extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaPrincipal.class.getName());
     private VCliente ventanaC;
-    //private VSalas ventanaS;
-    //private VPeliculas ventanaP;
+    private VSalas ventanaS;
+    private VPelicula ventanaP;
     //private VPeliculaSala ventanaPS;
     
     /**
@@ -38,7 +37,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         btnCliente = new javax.swing.JButton();
         btnSalas = new javax.swing.JButton();
-        btnPeliculas = new javax.swing.JButton();
+        btnPelicula = new javax.swing.JButton();
         btnPeliculasSalas = new javax.swing.JButton();
         btnReservarAsientos = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -68,10 +67,10 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnPeliculas.setText("Peliculas");
-        btnPeliculas.addActionListener(new java.awt.event.ActionListener() {
+        btnPelicula.setText("Peliculas");
+        btnPelicula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPeliculasActionPerformed(evt);
+                btnPeliculaActionPerformed(evt);
             }
         });
 
@@ -101,7 +100,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addContainerGap(124, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnCerrar)
-                    .addComponent(btnPeliculas)
+                    .addComponent(btnPelicula)
                     .addComponent(btnSalas)
                     .addComponent(btnCliente))
                 .addGap(200, 200, 200))
@@ -128,7 +127,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnSalas)
                 .addGap(18, 18, 18)
-                .addComponent(btnPeliculas)
+                .addComponent(btnPelicula)
                 .addGap(18, 18, 18)
                 .addComponent(btnPeliculasSalas)
                 .addGap(18, 18, 18)
@@ -143,30 +142,29 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
         if (ventanaC == null) {
-        ventanaC = new VCliente();
-    }
-    ventanaC.setVisible(true);        // TODO add your handling code here:
+            ventanaC = new VCliente();
+        }
+        ventanaC.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_btnClienteActionPerformed
 
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
-    this.dispose();    // TODO add your handling code here:
+        this.dispose();    // TODO add your handling code here:
     }//GEN-LAST:event_btnCerrarActionPerformed
 
     private void btnSalasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalasActionPerformed
-           /*if (ventanaS == null) {
-        ventanaS = new VSalas();
+        if (ventanaS == null) {
+            ventanaS = new VSalas();
         }
-        ventanaS.setVisible(true);         // TODO add your handling code here:
-        }*/        // TODO add your handling code here:
+        ventanaS.setVisible(true);
+   
     }//GEN-LAST:event_btnSalasActionPerformed
 
-    private void btnPeliculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPeliculasActionPerformed
-          /* if (ventanaP == null) {
-        ventanaP = new VPelicula();
+    private void btnPeliculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPeliculaActionPerformed
+        if (ventanaP == null) {
+            ventanaP = new VPelicula();
         }
-        ventanaP.setVisible(true);         // TODO add your handling code here:
-        } */        // TODO add your handling code here:
-    }//GEN-LAST:event_btnPeliculasActionPerformed
+        ventanaP.setVisible(true); // Mostrar la ventana correctamente }      // TODO add your handling code here:
+    }//GEN-LAST:event_btnPeliculaActionPerformed
 
     private void btnPeliculasSalasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPeliculasSalasActionPerformed
         /* if (ventanaPS == null) {
@@ -184,7 +182,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrar;
     private javax.swing.JButton btnCliente;
-    private javax.swing.JButton btnPeliculas;
+    private javax.swing.JButton btnPelicula;
     private javax.swing.JButton btnPeliculasSalas;
     private javax.swing.JButton btnReservarAsientos;
     private javax.swing.JButton btnSalas;
