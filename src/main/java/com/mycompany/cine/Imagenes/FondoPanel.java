@@ -11,7 +11,7 @@ public class FondoPanel extends JPanel {
 
     public FondoPanel() {
         // Ruta de la imagen en resources/imagenes/Cine.jpg
-        imagen = new ImageIcon(getClass().getResource("/imagenes/Cine.jpg")).getImage();
+        imagen = new ImageIcon(getClass().getResource("/imagenes/FondoVPrincipal.png")).getImage();
     }
 
     @Override

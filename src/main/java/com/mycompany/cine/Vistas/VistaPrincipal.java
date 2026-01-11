@@ -4,6 +4,10 @@ package com.mycompany.cine.Vistas;
 import com.mycompany.cine.Vistas.VCliente;
 import com.mycompany.cine.Vistas.VPelicula;
 import com.mycompany.cine.Vistas.VSalas;
+import com.mycompany.cine.sala.Salas;
+import com.mycompany.cine.pelicula.Peliculas;
+import com.mycompany.cine.Controladores.*;
+import com.mycompany.cine.Imagenes.FondoPanel;
 
 
 
@@ -13,14 +17,42 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private VCliente ventanaC;
     private VSalas ventanaS;
     private VPelicula ventanaP;
-    //private VPeliculaSala ventanaPS;
-    
+    private VPeliculaSala ventanaPS;
+    private Salas salas;
+    private Peliculas peliculas;
+
     /**
      * Creates new form VistaPrincipal
      */
-    public VistaPrincipal() {    
+    
+    FondoPanel fondo = new FondoPanel();
+
+    public VistaPrincipal() {
+        this.setContentPane(fondo); 
         initComponents();
-    }
+        setLocationRelativeTo(null);
+
+    salas = new Salas();
+    peliculas = new Peliculas();
+
+    ventanaS = new VSalas();
+    ventanaP = new VPelicula();
+    ventanaPS = new VPeliculaSala();
+
+    ControladorSalas cSalas =
+            new ControladorSalas(ventanaS, salas);
+
+    ControladorPeliculas cPeliculas =
+            new ControladorPeliculas(ventanaP, peliculas);
+
+    ControladorPeliculaSala cPS =
+            new ControladorPeliculaSala(ventanaPS, salas, peliculas);
+
+    ventanaS.setControlador(cSalas);
+    ventanaP.setControlador(cPeliculas);
+    ventanaPS.setControlador(cPS);
+}
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -53,6 +85,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        btnCliente.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnCliente.setText("Cliente");
         btnCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -60,6 +93,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnSalas.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnSalas.setText("Salas");
         btnSalas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -67,6 +101,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnPelicula.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnPelicula.setText("Peliculas");
         btnPelicula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -74,6 +109,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnPeliculasSalas.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnPeliculasSalas.setText("Peliculas asignada en Salas");
         btnPeliculasSalas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -81,10 +117,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnReservarAsientos.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnReservarAsientos.setText("Reservar Asientos");
 
+        jLabel1.setFont(new java.awt.Font("Tempus Sans ITC", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("MENU");
 
+        btnCerrar.setFont(new java.awt.Font("Tempus Sans ITC", 1, 18)); // NOI18N
         btnCerrar.setText("Cerrar");
         btnCerrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -96,45 +136,49 @@ public class VistaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(124, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCerrar)
-                    .addComponent(btnPelicula)
-                    .addComponent(btnSalas)
-                    .addComponent(btnCliente))
-                .addGap(200, 200, 200))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(145, 145, 145)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(187, 187, 187)
+                        .addComponent(btnPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(88, 88, 88)
+                        .addGap(155, 155, 155)
+                        .addComponent(btnReservarAsientos))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(203, 203, 203)
+                        .addComponent(btnCerrar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(117, 117, 117)
                         .addComponent(btnPeliculasSalas))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(98, 98, 98)
-                        .addComponent(btnReservarAsientos)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(200, 200, 200)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnCliente)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(btnSalas)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(3, 3, 3)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(146, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addGap(25, 25, 25)
                 .addComponent(jLabel1)
                 .addGap(27, 27, 27)
                 .addComponent(btnCliente)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(btnSalas)
-                .addGap(18, 18, 18)
-                .addComponent(btnPelicula)
-                .addGap(18, 18, 18)
-                .addComponent(btnPeliculasSalas)
-                .addGap(18, 18, 18)
-                .addComponent(btnReservarAsientos)
                 .addGap(28, 28, 28)
+                .addComponent(btnPelicula)
+                .addGap(26, 26, 26)
+                .addComponent(btnPeliculasSalas)
+                .addGap(26, 26, 26)
+                .addComponent(btnReservarAsientos)
+                .addGap(27, 27, 27)
                 .addComponent(btnCerrar)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addGap(22, 22, 22))
         );
 
         pack();
@@ -167,11 +211,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPeliculaActionPerformed
 
     private void btnPeliculasSalasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPeliculasSalasActionPerformed
-        /* if (ventanaPS == null) {
+         if (ventanaPS == null) {
         ventanaPS = new VPeliculaSala();
         }
         ventanaPS.setVisible(true);         // TODO add your handling code here:
-        } */ // TODO add your handling code here:
+          // TODO add your handling code here:
     }//GEN-LAST:event_btnPeliculasSalasActionPerformed
 
     /**

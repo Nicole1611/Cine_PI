@@ -14,11 +14,12 @@ public class ControladorSalas {
     private NotificadorMensajes notificadorMensajes;
 
     // ---------------- CONSTRUCTOR ----------------
-    public ControladorSalas(VSalas vistaSala) {
+   public ControladorSalas(VSalas vistaSala, Salas salas) {
         this.vistaSala = vistaSala;
+        this.iSalas = salas;
         this.notificadorMensajes = new NotificadorMensajes();
-        this.iSalas = new Salas();
     }
+
 
     // ---------------- CREAR SALA ----------------
     public void procesoControladorSalas() {

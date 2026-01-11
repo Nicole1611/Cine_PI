@@ -7,12 +7,12 @@ import java.time.LocalDateTime;
 
 public class PeliculaSala {
     private LocalDateTime hora;
-    private Sala idSala; 
+    private Sala sala; 
     private Pelicula pelicula;
 
-    public PeliculaSala(LocalDateTime hora, Sala idSala, Pelicula pelicula) {
+    public PeliculaSala(LocalDateTime hora, Sala sala, Pelicula pelicula) {
         this.hora = hora;
-        this.idSala = idSala;
+        this.sala = sala;
         this.pelicula = pelicula;
     }
 
@@ -24,12 +24,12 @@ public class PeliculaSala {
         this.hora = hora;
     }
 
-    public Sala getIdSala() {
-        return idSala;
+    public Sala getSala() {
+        return sala;
     }
 
-    public void setIdSala(Sala idSala) {
-        this.idSala = idSala;
+    public void setSala(Sala sala) {
+        this.sala = sala;
     }
 
     public Pelicula getPelicula() {
@@ -39,4 +39,16 @@ public class PeliculaSala {
     public void setPelicula(Pelicula pelicula) {
         this.pelicula = pelicula;
     }
+    
+    @Override
+    public String toString() {
+    return "PROYECCIÓN\n" +
+           "-------------------\n" +
+           "Película: " + pelicula.getNombrePelicula() + "\n" +
+           "Género: " + pelicula.getGenero() + "\n" +
+           "Sala: " + sala.getIdSala() + "\n" +
+           "Capacidad: " + sala.getCapacidad() + "\n" +
+           "Hora: " + hora + "\n";
+}
+
 }

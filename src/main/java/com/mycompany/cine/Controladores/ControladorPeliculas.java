@@ -17,11 +17,12 @@ public class ControladorPeliculas {
     private Peliculas iPeliculas;
     private NotificadorMensajes notificadorMensajes;
 
-    public ControladorPeliculas(VPelicula vistaPelicula) {
+    public ControladorPeliculas(VPelicula vistaPelicula, Peliculas peliculas) {
         this.vistaPelicula = vistaPelicula;
+        this.iPeliculas = peliculas;
         this.notificadorMensajes = new NotificadorMensajes();
-        this.iPeliculas = new Peliculas();
     }
+
 
     public void crearPelicula() {
         try {
