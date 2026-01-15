@@ -4,10 +4,23 @@
  */
 package com.mycompany.cine.reservaAsientos;
 
-/**
- *
- * @author Usuario
- */
-public class IReservaAsientos {
-    
+import java.util.Queue;
+
+public interface IReservaAsientos {
+
+    void agregar(Reserva r);
+
+    // Buscar una reserva por su ID único
+    Reserva buscarPorId(int idReserva);
+
+    // Actualizar una reserva identificada por ID
+    boolean actualizarPorId(int idReserva, Reserva nueva);
+
+    // Eliminar una reserva por ID
+    boolean eliminarPorId(int idReserva);
+
+    // Listar todas las reservas
+    Queue<Reserva> listar();
 }
+
+

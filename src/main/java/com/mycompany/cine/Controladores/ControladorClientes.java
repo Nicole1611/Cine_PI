@@ -1,137 +1,160 @@
 package com.mycompany.cine.Controladores;
 
-import com.mycompany.cine.cliente.Cliente;
-import com.mycompany.cine.cliente.Clientes;
 import com.mycompany.cine.Vistas.NotificadorMensajes;
 import com.mycompany.cine.Vistas.VCliente;
+import com.mycompany.cine.cliente.Cliente;
+
+import java.util.List;
 
 public class ControladorClientes {
 
     private VCliente vistaCliente;
-    private Clientes iClientes;
-    private NotificadorMensajes notificadorMensajes;
+    private List<Cliente> clientes; // lista compartida con ControladorReservaA
+    private NotificadorMensajes notificador;
 
     // ---------------- CONSTRUCTOR ----------------
-    public ControladorClientes(VCliente vistaCliente) {
+    public ControladorClientes(VCliente vistaCliente, List<Cliente> clientes) {
         this.vistaCliente = vistaCliente;
-        this.notificadorMensajes = new NotificadorMensajes();
-        this.iClientes = new Clientes();
+        this.clientes = clientes; // lista compartida
+        this.notificador = new NotificadorMensajes();
     }
 
     // ---------------- CREAR CLIENTE ----------------
-    public void procesoControladorClientes() {
-    try {
-        String cedula = vistaCliente.getCedula().trim();
-        String nombre = vistaCliente.getNombre().trim();
-        String edadTexto = vistaCliente.getEdad().trim();
-
-        if (cedula.isEmpty() || nombre.isEmpty() || edadTexto.isEmpty()) {
-            notificadorMensajes.mostrarMensaje("Todos los campos son obligatorios");
-            return;
-        }
-
-        int edad;
+    public void agregarCliente() {
         try {
-            edad = Integer.parseInt(edadTexto);
-        } catch (NumberFormatException e) {
-            notificadorMensajes.mostrarMensaje("La edad debe ser un número");
-            return;
+            String cedula = vistaCliente.getCedula().trim();
+            String nombre = vistaCliente.getNombre().trim();
+            String edadTexto = vistaCliente.getEdad().trim();
+
+            if (cedula.isEmpty() || nombre.isEmpty() || edadTexto.isEmpty()) {
+                notificador.mostrarMensaje("Todos los campos son obligatorios");
+                return;
+            }
+
+            int edad;
+            try {
+                edad = Integer.parseInt(edadTexto);
+            } catch (NumberFormatException e) {
+                notificador.mostrarMensaje("La edad debe ser un número");
+                return;
+            }
+
+            // Verificar que no exista cliente con esa cédula
+            for (Cliente c : clientes) {
+                if (c.getCedula().equals(cedula)) {
+                    notificador.mostrarMensaje("La cédula ya está registrada");
+                    return;
+                }
+            }
+
+            Cliente cliente = new Cliente(cedula, nombre, edad);
+            clientes.add(cliente);
+
+            notificador.mostrarMensaje("Cliente agregado correctamente");
+            vistaCliente.limpiarCampos();
+            mostrarClientes();
+
+        } catch (Exception e) {
+            notificador.mostrarMensaje("Error al registrar cliente");
         }
-
-        if (iClientes.buscarPorCedula(cedula) != null) {
-            notificadorMensajes.mostrarMensaje("La cédula ya está registrada");
-            return;
-        }
-
-        Cliente cliente = new Cliente(cedula, nombre, edad);
-        iClientes.crear(cliente);
-
-        notificadorMensajes.mostrarMensaje("Cliente agregado correctamente");
-        vistaCliente.limpiarCampos();
-        mostrarClientes();
-
-    } catch (Exception e) {
-        notificadorMensajes.mostrarMensaje("Error al registrar cliente");
     }
-}
-
 
     // ---------------- BUSCAR CLIENTE ----------------
     public void buscarCliente() {
         try {
-            String cedula = vistaCliente.getCedula();
-            Cliente c = iClientes.buscarPorCedula(cedula);
+            String cedula = vistaCliente.getCedula().trim();
+            Cliente encontrado = null;
 
-            if (c != null) {
-                vistaCliente.setNombre(c.getNombre());
-                vistaCliente.setEdad(String.valueOf(c.getEdad()));
+            for (Cliente c : clientes) {
+                if (c.getCedula().equals(cedula)) {
+                    encontrado = c;
+                    break;
+                }
+            }
+
+            if (encontrado != null) {
+                vistaCliente.setNombre(encontrado.getNombre());
+                vistaCliente.setEdad(String.valueOf(encontrado.getEdad()));
 
                 vistaCliente.mostrarClientes(
                     "CLIENTE ENCONTRADO\n" +
-                    "Cédula: " + c.getCedula() + "\n" +
-                    "Nombre: " + c.getNombre() + "\n" +
-                    "Edad: " + c.getEdad()
+                    "Cédula: " + encontrado.getCedula() + "\n" +
+                    "Nombre: " + encontrado.getNombre() + "\n" +
+                    "Edad: " + encontrado.getEdad()
                 );
             } else {
-                notificadorMensajes.mostrarMensaje("Cliente no encontrado");
+                notificador.mostrarMensaje("Cliente no encontrado");
             }
 
         } catch (Exception e) {
-            notificadorMensajes.mostrarMensaje("Error al buscar cliente");
+            notificador.mostrarMensaje("Error al buscar cliente");
         }
     }
 
     // ---------------- ACTUALIZAR CLIENTE ----------------
     public void actualizarCliente() {
         try {
-            String cedula = vistaCliente.getCedula();
-            String nombre = vistaCliente.getNombre();
-            int edad = Integer.parseInt(vistaCliente.getEdad());
+            String cedula = vistaCliente.getCedula().trim();
+            String nombre = vistaCliente.getNombre().trim();
+            int edad = Integer.parseInt(vistaCliente.getEdad().trim());
 
-            Cliente cliente = new Cliente(cedula, nombre, edad);
+            Cliente cliente = null;
+            for (Cliente c : clientes) {
+                if (c.getCedula().equals(cedula)) {
+                    cliente = c;
+                    break;
+                }
+            }
 
-            boolean actualizado = iClientes.actualizar(cliente);
-
-            if (actualizado) {
-                notificadorMensajes.mostrarMensaje("Cliente actualizado correctamente");
+            if (cliente != null) {
+                cliente.setNombre(nombre);
+                cliente.setEdad(edad);
+                notificador.mostrarMensaje("Cliente actualizado correctamente");
                 vistaCliente.limpiarCampos();
                 mostrarClientes();
             } else {
-                notificadorMensajes.mostrarMensaje("No existe cliente con esa cédula");
+                notificador.mostrarMensaje("No existe cliente con esa cédula");
             }
 
         } catch (NumberFormatException e) {
-            notificadorMensajes.mostrarMensaje("Edad inválida");
+            notificador.mostrarMensaje("Edad inválida");
         } catch (Exception e) {
-            notificadorMensajes.mostrarMensaje("Error al actualizar cliente");
+            notificador.mostrarMensaje("Error al actualizar cliente");
         }
     }
 
     // ---------------- ELIMINAR CLIENTE ----------------
     public void eliminarCliente() {
         try {
-            String cedula = vistaCliente.getCedula();
+            String cedula = vistaCliente.getCedula().trim();
+            Cliente aEliminar = null;
 
-            boolean eliminado = iClientes.eliminar(cedula);
+            for (Cliente c : clientes) {
+                if (c.getCedula().equals(cedula)) {
+                    aEliminar = c;
+                    break;
+                }
+            }
 
-            if (eliminado) {
-                notificadorMensajes.mostrarMensaje("Cliente eliminado correctamente");
+            if (aEliminar != null) {
+                clientes.remove(aEliminar);
+                notificador.mostrarMensaje("Cliente eliminado correctamente");
                 vistaCliente.limpiarCampos();
                 mostrarClientes();
             } else {
-                notificadorMensajes.mostrarMensaje("Cliente no encontrado");
+                notificador.mostrarMensaje("Cliente no encontrado");
             }
 
         } catch (Exception e) {
-            notificadorMensajes.mostrarMensaje("Error al eliminar cliente");
+            notificador.mostrarMensaje("Error al eliminar cliente");
         }
     }
 
-    // ---------------- LISTAR CLIENTES EN TEXTAREA ----------------
+    // ---------------- LISTAR CLIENTES ----------------
     public void mostrarClientes() {
         StringBuilder sb = new StringBuilder();
-
-        for (Cliente c : iClientes.listar()) {
+        sb.append("Lista de Clientes:\n------------------------\n");
+        for (Cliente c : clientes) {
             sb.append("Cédula: ").append(c.getCedula()).append("\n");
             sb.append("Nombre: ").append(c.getNombre()).append("\n");
             sb.append("Edad: ").append(c.getEdad()).append("\n");
@@ -139,5 +162,15 @@ public class ControladorClientes {
         }
 
         vistaCliente.mostrarClientes(sb.toString());
+    }
+
+    // ---------------- OBTENER CLIENTE POR CÉDULA ----------------
+    public Cliente obtenerClientePorCedula(String cedula) {
+        for (Cliente c : clientes) {
+            if (c.getCedula().equals(cedula)) {
+                return c;
+            }
+        }
+        return null;
     }
 }

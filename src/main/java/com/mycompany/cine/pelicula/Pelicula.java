@@ -37,7 +37,7 @@ public class Pelicula {
 
     @Override
 public String toString() {
-    return "PELÍCULA ENCONTRADA\n" +
+    return "=== PELÍCULA ENCONTRADA ===\n" +
            "-------------------\n" +
            "Nombre: " + nombrePelicula + "\n" +
            "Género: " + genero + "\n" +

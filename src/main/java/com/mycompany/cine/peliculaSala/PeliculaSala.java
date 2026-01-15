@@ -40,6 +40,8 @@ public class PeliculaSala {
         this.pelicula = pelicula;
     }
     
+   
+    
     @Override
     public String toString() {
     return "PROYECCIÓN\n" +

@@ -7,6 +7,8 @@ package com.mycompany.cine.Vistas;
 import com.mycompany.cine.Vistas.VistaPrincipal;
 import com.mycompany.cine.Imagenes.FondoPanelCuatro;
 import com.mycompany.cine.Controladores.ControladorClientes;
+import com.mycompany.cine.cliente.Cliente;
+import java.util.List;
 
 /**
  *
@@ -16,19 +18,22 @@ public class VCliente extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VCliente.class.getName());
     private ControladorClientes controladorCliente;
+    private List<Cliente> clientes;
     /**
      * Creates new form VClientes
      */
      FondoPanelCuatro fondo = new FondoPanelCuatro();
      private VistaPrincipal principal;
-    public VCliente() {
-        this.setContentPane(fondo); // fondo
+     public VCliente(List<Cliente> clientes) { // ✅ constructor con lista
+        this.clientes = clientes;
+        this.setContentPane(fondo); 
         initComponents();
-        controladorCliente = new ControladorClientes(this);
-        this.setLocationRelativeTo(null);
+    setLocationRelativeTo(null);
     }
 
-
+     public void setControlador(ControladorClientes controlador) {
+        this.controladorCliente = controlador;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -193,7 +198,7 @@ public class VCliente extends javax.swing.JFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
     if (controladorCliente != null) {
-            controladorCliente.procesoControladorClientes();
+            controladorCliente.agregarCliente();
         }             // TODO add your handling code here:
     }//GEN-LAST:event_btnAgregarActionPerformed
 

@@ -1,30 +1,43 @@
 
 package com.mycompany.cine.Vistas;
 
-import com.mycompany.cine.Vistas.VCliente;
-import com.mycompany.cine.Vistas.VPelicula;
-import com.mycompany.cine.Vistas.VSalas;
+import com.mycompany.cine.Vistas.*;
 import com.mycompany.cine.sala.Salas;
 import com.mycompany.cine.pelicula.Peliculas;
 import com.mycompany.cine.Controladores.*;
 import com.mycompany.cine.Imagenes.FondoPanel;
+import com.mycompany.cine.cliente.Cliente;
+import com.mycompany.cine.peliculaSala.PeliculaSalas;
+import com.mycompany.cine.reservaAsientos.ReservaAsientos;
+import java.util.ArrayList;
+import java.util.List;
 
 
 
 public class VistaPrincipal extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaPrincipal.class.getName());
+    // Ventanas
     private VCliente ventanaC;
     private VSalas ventanaS;
     private VPelicula ventanaP;
     private VPeliculaSala ventanaPS;
+    private VReservaAsientos ventanaRA;
+
+    // Modelos / datos
     private Salas salas;
     private Peliculas peliculas;
+    private PeliculaSalas funciones;
+    private ReservaAsientos reservaAsientos;
+    private List<Cliente> clientes; // lista compartida
 
-    /**
-     * Creates new form VistaPrincipal
-     */
-    
+    // Controladores
+    private ControladorClientes cClientes;
+    private ControladorSalas cSalas;
+    private ControladorPeliculas cPeliculas;
+    private ControladorPeliculaSala cPS;
+    private ControladorReservaA cRA;
+
     FondoPanel fondo = new FondoPanel();
 
     public VistaPrincipal() {
@@ -32,26 +45,36 @@ public class VistaPrincipal extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
 
-    salas = new Salas();
-    peliculas = new Peliculas();
+        // Crear modelos / datos
+        salas = new Salas();
+        peliculas = new Peliculas();
+        funciones = new PeliculaSalas(salas, peliculas);
+        reservaAsientos = new ReservaAsientos();
+        clientes = new ArrayList<>(); // lista compartida para toda la app
 
-    ventanaS = new VSalas();
-    ventanaP = new VPelicula();
-    ventanaPS = new VPeliculaSala();
+        // Crear ventanas (pasando la lista compartida si es necesario)
+        ventanaC = new VCliente(clientes); 
+        ventanaS = new VSalas();
+        ventanaP = new VPelicula();
+        ventanaPS = new VPeliculaSala();
+        ventanaRA = new VReservaAsientos();
 
-    ControladorSalas cSalas =
-            new ControladorSalas(ventanaS, salas);
+        // Crear controladores y asignarlos
+        cClientes = new ControladorClientes(ventanaC, clientes);
+        cSalas = new ControladorSalas(ventanaS, salas);
+        cPeliculas = new ControladorPeliculas(ventanaP, peliculas);
+        cRA = new ControladorReservaA(ventanaRA, reservaAsientos, clientes, funciones);
+        cPS = new ControladorPeliculaSala(ventanaPS, funciones, cRA);
 
-    ControladorPeliculas cPeliculas =
-            new ControladorPeliculas(ventanaP, peliculas);
+        // Asignar controladores a las ventanas
+        ventanaC.setControlador(cClientes);
+        ventanaS.setControlador(cSalas);
+        ventanaP.setControlador(cPeliculas);
+        ventanaPS.setControlador(cPS);
+        ventanaPS.setControladorReservaA(cRA);
+        ventanaRA.setControlador(cRA);
+    }
 
-    ControladorPeliculaSala cPS =
-            new ControladorPeliculaSala(ventanaPS, salas, peliculas);
-
-    ventanaS.setControlador(cSalas);
-    ventanaP.setControlador(cPeliculas);
-    ventanaPS.setControlador(cPS);
-}
 
 
     /**
@@ -119,6 +142,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
         btnReservarAsientos.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnReservarAsientos.setText("Reservar Asientos");
+        btnReservarAsientos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReservarAsientosActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tempus Sans ITC", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -186,13 +214,15 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
         if (ventanaC == null) {
-            ventanaC = new VCliente();
+            ventanaC = new VCliente(clientes);
         }
         ventanaC.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_btnClienteActionPerformed
 
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
-        this.dispose();    // TODO add your handling code here:
+        
+        System.exit(0);
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnCerrarActionPerformed
 
     private void btnSalasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalasActionPerformed
@@ -214,9 +244,20 @@ public class VistaPrincipal extends javax.swing.JFrame {
          if (ventanaPS == null) {
         ventanaPS = new VPeliculaSala();
         }
+        ventanaPS.setControlador(cPS);
         ventanaPS.setVisible(true);         // TODO add your handling code here:
           // TODO add your handling code here:
     }//GEN-LAST:event_btnPeliculasSalasActionPerformed
+
+    private void btnReservarAsientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservarAsientosActionPerformed
+        if (ventanaRA == null) {
+        // Esto ya no será necesario porque la ventana se creó en el constructor
+        ventanaRA = new VReservaAsientos();
+        cRA = new ControladorReservaA(ventanaRA, reservaAsientos, clientes, funciones);
+        ventanaRA.setControlador(cRA);
+    }
+    ventanaRA.setVisible(true);// TODO add your handling code here:
+    }//GEN-LAST:event_btnReservarAsientosActionPerformed
 
     /**
      * @param args the command line arguments

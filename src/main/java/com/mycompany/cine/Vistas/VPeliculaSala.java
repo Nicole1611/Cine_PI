@@ -5,6 +5,7 @@
 package com.mycompany.cine.Vistas;
 
 import com.mycompany.cine.Controladores.ControladorPeliculaSala;
+import com.mycompany.cine.Controladores.ControladorReservaA;
 import com.mycompany.cine.Imagenes.FondoPanelTres;
 
 /**
@@ -15,6 +16,7 @@ public class VPeliculaSala extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VPeliculaSala.class.getName());
         private ControladorPeliculaSala controladorPeliculaSalas;
+        private ControladorReservaA controladorReservaA;
     /**
      * Creates new form VPeliculaSala
      */
@@ -29,6 +31,11 @@ public class VPeliculaSala extends javax.swing.JFrame {
     public void setControlador(ControladorPeliculaSala controladorPeliculaSalas) {
         this.controladorPeliculaSalas = controladorPeliculaSalas;
     }
+    
+    public void setControladorReservaA(ControladorReservaA controladorReservaA) {
+        this.controladorReservaA = controladorReservaA;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -198,7 +205,9 @@ public class VPeliculaSala extends javax.swing.JFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         if (controladorPeliculaSalas != null) {
             controladorPeliculaSalas.crearPeliculaSala();
-        }// TODO add your handling code here:
+            
+        }
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed

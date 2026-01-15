@@ -5,8 +5,6 @@ import com.mycompany.cine.Vistas.NotificadorMensajes;
 import com.mycompany.cine.Vistas.VPeliculaSala;
 import com.mycompany.cine.peliculaSala.PeliculaSala;
 import com.mycompany.cine.peliculaSala.PeliculaSalas;
-import com.mycompany.cine.sala.Salas;
-import com.mycompany.cine.pelicula.Peliculas;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
@@ -16,15 +14,13 @@ public class ControladorPeliculaSala {
     private VPeliculaSala vista;
     private PeliculaSalas peliculaSalas;
     private NotificadorMensajes notificador;
-
+    private ControladorReservaA controladorReservaA; 
     // ---------------- CONSTRUCTOR ----------------
-    public ControladorPeliculaSala(VPeliculaSala vista,
-                                   Salas salas,
-                                   Peliculas peliculas) {
-
+    public ControladorPeliculaSala(VPeliculaSala vista, PeliculaSalas peliculaSalas, ControladorReservaA controladorReservaA) {
         this.vista = vista;
+        this.peliculaSalas = peliculaSalas;
         this.notificador = new NotificadorMensajes();
-        this.peliculaSalas = new PeliculaSalas(salas, peliculas);
+        this.controladorReservaA = controladorReservaA; // se guarda para actualizar tabla
     }
 
     // ---------------- CREAR PROYECCIÓN ----------------
@@ -63,6 +59,9 @@ public class ControladorPeliculaSala {
                 notificador.mostrarMensaje("Proyección creada correctamente");
                 vista.limpiarCampos();
                 mostrarProyecciones();
+                if (controladorReservaA != null) {
+                    controladorReservaA.actualizarTablaFunciones();
+                }
             } else {
                 notificador.mostrarMensaje(
                     "Error: la sala o la película no existen"
@@ -157,5 +156,12 @@ public class ControladorPeliculaSala {
 
         vista.mostrarResultado(sb.toString());
     }
+
+
+
+    public PeliculaSalas getPeliculaSalas() {
+    return peliculaSalas;
+}
+    
 }
 
